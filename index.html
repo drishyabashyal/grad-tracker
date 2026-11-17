@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grad School Applications – Fall 2027</title>
+<style>
+  :root{
+    --bg:#f6f7f9; --card:#fff; --ink:#1d2330; --muted:#606a7b; --line:#e3e6eb;
+    --accent:#1f5fbf; --accent-soft:#e8f0fc; --ok:#1d7a46; --ok-soft:#e5f4ea;
+    --warn:#a35a00; --warn-soft:#fdf1e1; --bad:#b3261e; --bad-soft:#fbe9e8;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+  a{color:var(--accent)}
+  .layout{display:flex;min-height:100vh}
+  nav{width:240px;flex-shrink:0;background:#151b26;color:#cfd6e2;padding:20px 14px;position:sticky;top:0;height:100vh;overflow:auto}
+  nav h1{font-size:15px;color:#fff;margin:0 8px 18px;line-height:1.3}
+  nav h1 small{display:block;font-weight:400;color:#8b96a8;font-size:12px;margin-top:2px}
+  nav a{display:flex;align-items:center;justify-content:space-between;gap:8px;color:#cfd6e2;text-decoration:none;padding:8px 10px;border-radius:7px;font-size:14px;margin-bottom:2px}
+  nav a:hover{background:#222b3a}
+  nav a.active{background:#2b3a55;color:#fff}
+  nav .sec{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#6f7b8f;margin:16px 10px 6px}
+  nav .pct{font-size:11px;color:#8b96a8}
+  main{flex:1;padding:28px 32px 60px;max-width:1100px}
+  h2{margin:0 0 4px;font-size:26px}
+  h3{margin:0 0 12px;font-size:17px}
+  .sub{color:var(--muted);margin:0 0 22px}
+  .grid{display:grid;gap:16px}
+  .g2{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+  .g3{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px}
+  .stat{font-size:28px;font-weight:700}
+  .stat-label{color:var(--muted);font-size:13px}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-weight:600}
+  tr:last-child td{border-bottom:none}
+  .pill{display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:600;white-space:nowrap}
+  .p-gray{background:#eef0f3;color:#4a5363}.p-blue{background:var(--accent-soft);color:var(--accent)}
+  .p-green{background:var(--ok-soft);color:var(--ok)}.p-orange{background:var(--warn-soft);color:var(--warn)}
+  .p-red{background:var(--bad-soft);color:var(--bad)}
+  .bar{height:8px;background:#e9ecf1;border-radius:99px;overflow:hidden}
+  .bar>span{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .3s}
+  .check{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);cursor:pointer}
+  .check:last-child{border-bottom:none}
+  .check input{margin-top:4px;width:16px;height:16px;accent-color:var(--accent);flex-shrink:0}
+  .check .hint{display:block;font-size:12px;color:var(--muted)}
+  .check.done>span>b{text-decoration:line-through;color:var(--muted);font-weight:500}
+  .check b{font-weight:500}
+  select,input[type=text],input[type=url],input[type=date],textarea{font:inherit;font-size:14px;padding:7px 9px;border:1px solid #cdd2da;border-radius:7px;background:#fff;color:var(--ink);width:100%}
+  textarea{min-height:110px;resize:vertical}
+  label.f{display:block;font-size:12px;color:var(--muted);margin:10px 0 4px;font-weight:600}
+  .kv{display:grid;grid-template-columns:150px 1fr;gap:6px 12px;font-size:14px}
+  .kv dt{color:var(--muted)}
+  .kv dd{margin:0}
+  .note{background:var(--warn-soft);border:1px solid #f1d7ae;color:#6b3d00;border-radius:10px;padding:10px 14px;font-size:13px;margin-bottom:16px}
+  .info{background:var(--accent-soft);border:1px solid #c9dbf6;color:#163f7f;border-radius:10px;padding:10px 14px;font-size:13px}
+  .btn{font:inherit;font-size:13px;padding:7px 14px;border-radius:7px;border:1px solid #cdd2da;background:#fff;cursor:pointer}
+  .btn:hover{background:#f0f2f5}
+  .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+  .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .muted{color:var(--muted)}
+  .small{font-size:12px}
+  .rec-grid{display:grid;grid-template-columns:150px repeat(5,1fr);gap:0;font-size:13px;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  .rec-grid div{padding:8px;border-bottom:1px solid var(--line);border-right:1px solid var(--line);display:flex;align-items:center;justify-content:center}
+  .rec-grid div.h{background:#f6f7f9;font-weight:600;font-size:12px}
+  .rec-grid div.l{justify-content:flex-start}
+  .page{display:none}.page.show{display:block}
+  .toast{position:fixed;bottom:18px;right:18px;background:#151b26;color:#fff;padding:9px 14px;border-radius:8px;font-size:13px;opacity:0;transition:opacity .25s;pointer-events:none}
+  .toast.show{opacity:1}
+  @media (max-width:800px){
+    .layout{flex-direction:column}
+    nav{width:100%;height:auto;position:static}
+    main{padding:20px 16px}
+    .kv{grid-template-columns:1fr}
+    .rec-grid{grid-template-columns:110px repeat(5,1fr);font-size:11px}
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+  <nav id="nav"></nav>
+  <main id="main"></main>
+</div>
+<div class="toast" id="toast">Saved</div>
+
+<script>
+/* ---------- Static application info ---------- */
+const SCHOOLS = [
+  {
+    id:"usm", short:"USM", name:"University of Southern Mississippi",
+    program:"MS, Computer Science (School of Computing Sciences & Computer Engineering)",
+    rank:1, chance:"Highest",
+    deadline:"2027-06-01", deadlineNote:"Fall international deadline: June 1 (domestic: July 1). All materials must be in by the deadline.",
+    fee:60, feeNote:"$60, paid before the deadline.",
+    contact:"Coast-campus robotics lab professor (ask about a GRA opening); Dr. Jose Martinez Cruz (Hattiesburg lab).",
+    funding:"Unknown: ask about graduate/research assistantships for Fall 2027.",
+    whyRank:"Your own school. Faculty already know your work.",
+    requirements:["Online application + $60 fee","Personal statement","3 letters of recommendation","Official transcripts","English proficiency (TOEFL/IELTS/PTE/iTEP): ask if your USM degree waives it"],
+    links:[["International graduate admissions","https://www.usm.edu/graduate-admissions/international-admissions/"],["CS graduate program FAQ","https://www.usm.edu/computing-sciences-computer-engineering/csgradfaq.php"]],
+    tips:"No rush, but apply early as a safety. Email the coast-campus lab professor to confirm whether the MS is offered there and whether he has a GRA spot."
+  },
+  {
+    id:"uri", short:"URI", name:"University of Rhode Island",
+    program:"Ocean Engineering (MS or PhD: decide which and say why in your SOP)",
+    rank:2, chance:"High",
+    deadline:"2027-01-01", deadlineNote:"Apply by January 1 for first consideration for TA/RA and fellowship funding (based on last cycle's page: confirm the date).",
+    fee:65, feeNote:"$65 Graduate School fee. Fee waivers are not offered to international applicants.",
+    contact:"Prof. Lora Van Uffelen (Ocean Engineering). Also Prof. Brennan Phillips said to apply.",
+    funding:"Possible: funding clearer in spring. She needs help with localization.",
+    whyRank:"Positive Zoom call. She told you to apply and mention her name.",
+    requirements:["Online application + $65 fee","Statement of purpose (mention Prof. Van Uffelen)","Letters of recommendation","Transcripts","Resume/CV","English proficiency: ask about a waiver"],
+    links:[["Ocean Engineering PhD admission","https://web.uri.edu/oce/academics/ocean-engineering-ph-d/admission/"],["Ocean Engineering MS admission","https://web.uri.edu/oce/academics/ocean-engineering-m-s/admission/"],["URI Graduate School: apply","https://web.uri.edu/graduate-school/apply"]],
+    tips:"She reviews around February and decides around March. She also suggested applying for fellowships. Mention localization and DVL/sonar/ZED mapping in the SOP."
+  },
+  {
+    id:"sbu", short:"Stony Brook", name:"Stony Brook University",
+    program:"PhD, Mechanical Engineering",
+    rank:3, chance:"High",
+    deadline:"2027-01-01", deadlineNote:"PhD priority deadline: January 1. General deadline: February 15. Aim for the priority date.",
+    fee:100, feeNote:"$100 Graduate School fee. Fee waivers are rarely given to international applicants.",
+    contact:"Prof. Katherine Skinner (marine robotics).",
+    funding:"Strong: she is recruiting funded PhD students for Fall 2027. MS funding depends on availability (unknown until mid-summer).",
+    whyRank:"She invited you to apply for a funded PhD. Ranked below URI only because PhD admission is more competitive.",
+    requirements:["Online application + $100 fee","Statement of purpose (mention Prof. Skinner)","3 letters of recommendation","Unofficial transcripts (official after admission)","Resume/CV","GRE optional","English proficiency: ask about a waiver"],
+    links:[["ME prospective graduate students (deadlines)","https://www.stonybrook.edu/mechanical-engineering/academics/Graduate/prospective-graduate-students.html"],["Graduate School application","https://www.stonybrook.edu/grad/admissions/apply/graduate-programs"]],
+    tips:"Your strongest invitation. Give this SOP extra time, and tie your RoboSub hardware and mapping goals to her marine robotics projects."
+  },
+  {
+    id:"fit", short:"Florida Tech", name:"Florida Institute of Technology",
+    program:"Ocean Engineering (MS or PhD: depends on Prof. Wood's funding)",
+    rank:4, chance:"Medium",
+    deadline:"2026-12-31", deadlineNote:"Rolling admissions. Target: end of December, after Prof. Wood hears about his grant.",
+    fee:60, feeNote:"$60 for master's, $80 for doctoral.",
+    contact:"Prof. Stephen Wood (Ocean Engineering).",
+    funding:"Depends on a grant he expects in December.",
+    whyRank:"Interested in you, but funding isn't confirmed.",
+    requirements:["Online application + $60 (MS) or $80 (PhD) fee","Statement of purpose (mention Prof. Wood)","Letters of recommendation","Transcripts","Resume/CV","English proficiency: ask about a waiver"],
+    links:[["Graduate admission requirements","https://fit.edu/graduate-admissions/"]],
+    tips:"Follow up in December after his grant decision. If the grant doesn't come through, consider skipping this one and saving the fee."
+  },
+  {
+    id:"uf", short:"UF", name:"University of Florida",
+    program:"MS, Mechanical Engineering (Mechanical & Aerospace Engineering)",
+    rank:5, chance:"Lower (for funding)",
+    deadline:"2027-01-05", deadlineNote:"Fall priority deadline around January 5. International applicants are expected to meet the priority deadline (confirm on the MAE page).",
+    fee:30, feeNote:"$30. UF Admissions does not offer fee waivers.",
+    contact:"Prof. Kamran Mohseni.",
+    funding:"None: he has no funding. The MS can admit you without funding.",
+    whyRank:"Admission to the MS is possible, but it would likely be unfunded.",
+    requirements:["Online application + $30 fee","Statement of purpose (mention Prof. Mohseni)","Letters of recommendation","Transcripts","Resume/CV","English proficiency: ask about a waiver"],
+    links:[["College of Engineering master's admission","https://eng.ufl.edu/graduate/masters-admission"],["UF graduate application","https://admissions.ufl.edu/apply/graduate/"]],
+    tips:"He asked you to mention his name in the application and SOP if you apply."
+  }
+];
+
+const RECOMMENDERS = [
+  {id:"martinez", name:"Dr. Jose Martinez Cruz", title:"Assistant Professor, SCSCE", from:"Robotics Lab faculty adviser, RoboSub, his classes"},
+  {id:"mull", name:"Ms. AJ Mull", title:"Instructor, SCSCE", from:"Operating Systems and Programming Languages (Fall 2026)"},
+  {id:"wiseman", name:"Brycie Wiseman", title:"PhD student, App Lab Coordinator", from:"Her class and the AI Innovation Hub / MDES project"}
+];
+
+const CHECKLIST = [
+  ["account","Create application account"],
+  ["form","Fill out the application form"],
+  ["sop","Tailored SOP uploaded","Mention the professor by name and the specific fit"],
+  ["resume","Resume / CV uploaded"],
+  ["transcript","Unofficial transcript uploaded"],
+  ["english","English proficiency handled","Test score sent, or waiver confirmed in writing"],
+  ["recs","Recommenders added in portal","Portal sends each one a private upload link"],
+  ["recsdone","All letters received"],
+  ["fee","Application fee paid"],
+  ["submit","Application submitted"],
+  ["notify","Emailed the professor that you applied"]
+];
+
+const STATUSES = [
+  ["notstarted","Not started","p-gray"],["inprogress","In progress","p-blue"],["submitted","Submitted","p-green"],
+  ["interview","Interview / contact","p-orange"],["admitted","Admitted","p-green"],["waitlist","Waitlisted","p-orange"],["rejected","Rejected","p-red"]
+];
+
+const REC_STEPS = [["asked","Asked"],["agreed","Agreed"],["brag","Brag sheet sent"]];
+
+/* ---------- State (saved in this browser) ---------- */
+const KEY = "gradTracker.v1";
+let state = load();
+function blank(){
+  const s = {schools:{}, recs:{}, sop:{status:"notstarted", link:"", draft:"", notes:""}, resume:{status:"notstarted", link:""}};
+  SCHOOLS.forEach(x=>s.schools[x.id]={status:"notstarted", checks:{}, sopStatus:"notstarted", notes:"", submittedOn:""});
+  RECOMMENDERS.forEach(r=>{ s.recs[r.id]={steps:{}, perSchool:{}, notes:"", askedOn:""}; });
+  return s;
+}
+function load(){
+  let s = blank();
+  try{
+    const raw = localStorage.getItem(KEY);
+    if(raw){ const saved = JSON.parse(raw); s = deepMerge(s, saved); }
+  }catch(e){}
+  return s;
+}
+function deepMerge(a,b){
+  for(const k in b){
+    if(b[k] && typeof b[k]==="object" && !Array.isArray(b[k])){ a[k]=deepMerge(a[k]||{}, b[k]); }
+    else a[k]=b[k];
+  }
+  return a;
+}
+let toastTimer;
+function save(){
+  try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){}
+  const t=document.getElementById("toast"); t.classList.add("show");
+  clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove("show"),900);
+  renderNav();
+}
+
+/* ---------- Helpers ---------- */
+const $ = s=>document.querySelector(s);
+const esc = s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function fmtDate(iso){ const d=new Date(iso+"T12:00:00"); return d.toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}); }
+function daysLeft(iso){ const t=new Date(); t.setHours(0,0,0,0); const d=new Date(iso+"T00:00:00"); return Math.round((d-t)/86400000); }
+function daysPill(iso){
+  const n=daysLeft(iso);
+  if(n<0) return `<span class="pill p-red">Passed</span>`;
+  if(n<=14) return `<span class="pill p-red">${n} days left</span>`;
+  if(n<=45) return `<span class="pill p-orange">${n} days left</span>`;
+  return `<span class="pill p-gray">${n} days left</span>`;
+}
+function statusPill(code){ const s=STATUSES.find(x=>x[0]===code)||STATUSES[0]; return `<span class="pill ${s[2]}">${s[1]}</span>`; }
+function statusSelect(val, attr){ return `<select ${attr}>${STATUSES.map(s=>`<option value="${s[0]}" ${s[0]===val?"selected":""}>${s[1]}</option>`).join("")}</select>`; }
+function progress(id){ const c=state.schools[id].checks; const done=CHECKLIST.filter(x=>c[x[0]]).length; return Math.round(done/CHECKLIST.length*100); }
+function recLettersDone(id){ return SCHOOLS.filter(s=>state.recs[id].perSchool[s.id]==="submitted").length; }
+
+/* ---------- Nav ---------- */
+function renderNav(){
+  const cur = location.hash.slice(1)||"home";
+  const link=(h,label,extra="")=>`<a href="#${h}" class="${cur===h?"active":""}"><span>${label}</span>${extra}</a>`;
+  $("#nav").innerHTML = `
+    <h1>Grad Applications<small>Fall 2027 · Robotics research</small></h1>
+    ${link("home","Home / Dashboard")}
+    <div class="sec">Universities</div>
+    ${SCHOOLS.map(s=>link(s.id, `${s.rank}. ${s.short}`, `<span class="pct">${progress(s.id)}%</span>`)).join("")}
+    <div class="sec">Documents</div>
+    ${link("sop","Statement of Purpose")}
+    ${link("recs","Recommendation Letters")}
+    ${link("backup","Backup & Restore")}`;
+}
+
+/* ---------- Pages ---------- */
+function pageHome(){
+  const totalFees = SCHOOLS.reduce((a,s)=>a+s.fee,0);
+  const submitted = SCHOOLS.filter(s=>["submitted","interview","admitted","waitlist","rejected"].includes(state.schools[s.id].status)).length;
+  const paid = SCHOOLS.filter(s=>state.schools[s.id].checks.fee).reduce((a,s)=>a+s.fee,0);
+  const next = [...SCHOOLS].filter(s=>daysLeft(s.deadline)>=0 && !state.schools[s.id].checks.submit).sort((a,b)=>a.deadline.localeCompare(b.deadline))[0];
+  const lettersTotal = RECOMMENDERS.reduce((a,r)=>a+recLettersDone(r.id),0);
+  return `
+  <h2>Dashboard</h2>
+  <p class="sub">Five applications for a funded research MS/PhD in robotics, Fall 2027. Ranked from highest to lowest chance of funded admission.</p>
+  <div class="grid g3" style="margin-bottom:16px">
+    <div class="card"><div class="stat">${submitted} / 5</div><div class="stat-label">Applications submitted</div></div>
+    <div class="card"><div class="stat">$${paid} / $${totalFees}</div><div class="stat-label">Fees paid (FL Tech PhD fee is $80)</div></div>
+    <div class="card"><div class="stat">${lettersTotal} / ${RECOMMENDERS.length*SCHOOLS.length}</div><div class="stat-label">Recommendation letters received</div></div>
+    <div class="card"><div class="stat" style="font-size:20px">${next?esc(next.short):"All done"}</div><div class="stat-label">${next?`Next deadline: ${fmtDate(next.deadline)} · ${daysLeft(next.deadline)} days`:"No upcoming deadlines"}</div></div>
+  </div>
+  <div class="card" style="margin-bottom:16px">
+    <h3>Universities</h3>
+    <div style="overflow-x:auto">
+    <table>
+      <tr><th>#</th><th>University</th><th>Deadline</th><th>Fee</th><th>Status</th><th style="min-width:140px">Progress</th></tr>
+      ${SCHOOLS.map(s=>`<tr>
+        <td>${s.rank}</td>
+        <td><a href="#${s.id}"><b>${esc(s.name)}</b></a><div class="small muted">${esc(s.program)}</div></td>
+        <td>${fmtDate(s.deadline)}<div style="margin-top:3px">${daysPill(s.deadline)}</div></td>
+        <td>$${s.fee}</td>
+        <td>${statusPill(state.schools[s.id].status)}</td>
+        <td><div class="bar"><span style="width:${progress(s.id)}%"></span></div><div class="small muted" style="margin-top:3px">${progress(s.id)}% of checklist</div></td>
+      </tr>`).join("")}
+    </table></div>
+  </div>
+  <div class="grid g2">
+    <div class="card">
+      <h3>Shared documents</h3>
+      <table>
+        <tr><td><a href="#sop">Statement of Purpose (master draft)</a></td><td>${statusPill(state.sop.status)}</td></tr>
+        <tr><td>Resume / CV</td><td>${statusSelect(state.resume.status,'data-resume')}</td></tr>
+        ${RECOMMENDERS.map(r=>`<tr><td><a href="#recs">${esc(r.name)}</a></td><td>${state.recs[r.id].steps.agreed?'<span class="pill p-green">Agreed</span>':state.recs[r.id].steps.asked?'<span class="pill p-blue">Asked</span>':'<span class="pill p-gray">Not asked</span>'} <span class="small muted">${recLettersDone(r.id)}/5 letters in</span></td></tr>`).join("")}
+      </table>
+    </div>
+    <div class="card">
+      <h3>Order to work on them (by deadline)</h3>
+      <ol style="margin:0;padding-left:20px;font-size:14px">
+        <li><b>Now:</b> ask recommenders, send brag sheets, finish the master SOP.</li>
+        <li><b>By Jan 1:</b> Stony Brook and URI, your two most important.</li>
+        <li><b>By Jan 5:</b> UF.</li>
+        <li><b>December:</b> Florida Tech, after Prof. Wood's grant news.</li>
+        <li><b>By June 1:</b> USM (apply early anyway).</li>
+      </ol>
+      <p class="small muted" style="margin:12px 0 0">Deadlines change. Confirm each one on the official page linked from each university's tab.</p>
+    </div>
+  </div>`;
+}
+
+function pageSchool(s){
+  const st = state.schools[s.id];
+  return `
+  <h2>${s.rank}. ${esc(s.name)}</h2>
+  <p class="sub">${esc(s.program)} · Chance: <b>${esc(s.chance)}</b></p>
+  <div class="grid g2" style="margin-bottom:16px">
+    <div class="card">
+      <h3>Key information</h3>
+      <dl class="kv">
+        <dt>Deadline</dt><dd><b>${fmtDate(s.deadline)}</b> ${daysPill(s.deadline)}<div class="small muted">${esc(s.deadlineNote)}</div></dd>
+        <dt>Application fee</dt><dd>${esc(s.feeNote)}</dd>
+        <dt>Faculty contact</dt><dd>${esc(s.contact)}</dd>
+        <dt>Funding outlook</dt><dd>${esc(s.funding)}</dd>
+        <dt>Why this rank</dt><dd>${esc(s.whyRank)}</dd>
+      </dl>
+      <div class="info" style="margin-top:14px"><b>Tip:</b> ${esc(s.tips)}</div>
+    </div>
+    <div class="card">
+      <h3>What they require</h3>
+      <ul style="margin:0 0 14px;padding-left:20px;font-size:14px">${s.requirements.map(r=>`<li>${esc(r)}</li>`).join("")}</ul>
+      <h3>Official links</h3>
+      <ul style="margin:0;padding-left:20px;font-size:14px">${s.links.map(l=>`<li><a href="${l[1]}" target="_blank" rel="noopener">${esc(l[0])}</a></li>`).join("")}</ul>
+    </div>
+  </div>
+  <div class="grid g2">
+    <div class="card">
+      <div class="row" style="justify-content:space-between;margin-bottom:6px"><h3 style="margin:0">Application checklist</h3><span class="small muted">${progress(s.id)}% done</span></div>
+      <div class="bar" style="margin-bottom:10px"><span style="width:${progress(s.id)}%"></span></div>
+      ${CHECKLIST.map(c=>`<label class="check ${st.checks[c[0]]?"done":""}"><input type="checkbox" data-check="${s.id}:${c[0]}" ${st.checks[c[0]]?"checked":""}><span><b>${esc(c[1])}</b>${c[2]?`<span class="hint">${esc(c[2])}</span>`:""}</span></label>`).join("")}
+    </div>
+    <div class="card">
+      <h3>Status</h3>
+      <label class="f">Application status</label>
+      ${statusSelect(st.status, `data-status="${s.id}"`)}
+      <label class="f">Tailored SOP for ${esc(s.short)}</label>
+      ${statusSelect(st.sopStatus, `data-sopstatus="${s.id}"`)}
+      <label class="f">Date submitted</label>
+      <input type="date" value="${esc(st.submittedOn)}" data-field="${s.id}:submittedOn">
+      <h3 style="margin-top:18px">Recommendation letters for ${esc(s.short)}</h3>
+      <table>
+        ${RECOMMENDERS.map(r=>`<tr><td>${esc(r.name)}</td><td style="width:170px">${recSelect(r.id,s.id)}</td></tr>`).join("")}
+      </table>
+      <label class="f">Notes (emails, replies, portal login hints, anything)</label>
+      <textarea data-field="${s.id}:notes" placeholder="e.g. Applicant ID, what the professor said, follow-up dates...">${esc(st.notes)}</textarea>
+    </div>
+  </div>`;
+}
+
+const REC_SCHOOL_STATES=[["none","Not requested"],["sent","Portal link sent"],["submitted","Letter submitted"]];
+function recSelect(rid,sid){
+  const v=state.recs[rid].perSchool[sid]||"none";
+  return `<select data-recschool="${rid}:${sid}">${REC_SCHOOL_STATES.map(o=>`<option value="${o[0]}" ${o[0]===v?"selected":""}>${o[1]}</option>`).join("")}</select>`;
+}
+
+function pageSOP(){
+  const sop=state.sop;
+  return `
+  <h2>Statement of Purpose</h2>
+  <p class="sub">Write one strong master draft, then tailor about 20–30% for each school (faculty fit, labs, research direction).</p>
+  <div class="note"><b>Privacy:</b> anything you type here is saved only in this browser, not on GitHub. Keep the real SOP in Google Docs or Word and paste its link below. Use <a href="#backup">Backup &amp; Restore</a> to move your progress to another device.</div>
+  <div class="grid g2" style="margin-bottom:16px">
+    <div class="card">
+      <h3>Master SOP</h3>
+      <label class="f">Status</label>
+      ${statusSelect(sop.status,'data-sop="status"').replace(/Submitted/,"Final")}
+      <label class="f">Link to your SOP file (Google Docs, OneDrive...)</label>
+      <input type="url" placeholder="https://..." value="${esc(sop.link)}" data-sop="link">
+      ${sop.link?`<p class="small" style="margin:6px 0 0"><a href="${esc(sop.link)}" target="_blank" rel="noopener">Open my SOP ↗</a></p>`:""}
+      <label class="f">Notes</label>
+      <textarea data-sop="notes" placeholder="Feedback, ideas, who reviewed it...">${esc(sop.notes)}</textarea>
+    </div>
+    <div class="card">
+      <h3>Tailored version per school</h3>
+      <table>
+        ${SCHOOLS.map(s=>`<tr><td><a href="#${s.id}">${esc(s.short)}</a><div class="small muted">${esc(s.contact.split(".")[0])}</div></td><td style="width:170px">${statusSelect(state.schools[s.id].sopStatus,`data-sopstatus="${s.id}"`)}</td></tr>`).join("")}
+      </table>
+    </div>
+  </div>
+  <div class="grid g2">
+    <div class="card">
+      <h3>What to cover (core, same for every school)</h3>
+      <ul style="margin:0;padding-left:20px;font-size:14px">
+        <li>What got you into robotics</li>
+        <li>Research and hardware experience: Robotics Lab RA, RoboSub hardware lead (power PCB, CAD, competition semifinals)</li>
+        <li>Supporting software work: simulation, ROS 2, sonar + camera mapping</li>
+        <li>What you learned and the skills you built</li>
+        <li>Long-term goal: the full robotics stack, from hardware to autonomy and perception</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>What to change per school</h3>
+      <ul style="margin:0;padding-left:20px;font-size:14px">
+        <li>Name 1–3 professors and say why (a project, paper, or lab focus)</li>
+        <li>Mention anyone who replied positively (Van Uffelen, Skinner, Wood, Mohseni)</li>
+        <li>Specific labs, courses, or facilities you'd use</li>
+        <li>Answer each program's prompt and respect its length limit</li>
+        <li><b>Double-check the school name</b> before uploading</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <h3>Scratchpad (optional)</h3>
+    <textarea data-sop="draft" style="min-height:220px" placeholder="Rough paragraphs and ideas. Saved in this browser only.">${esc(sop.draft)}</textarea>
+  </div>`;
+}
+
+function pageRecs(){
+  return `
+  <h2>Recommendation Letters</h2>
+  <p class="sub">Three recommenders, five schools. Each school's portal emails your recommender a private link, and they upload the letter themselves.</p>
+  <div class="note">You usually waive the right to read the letters, so this page tracks <b>status only</b>. Don't write the letters yourself. Send each recommender a brag sheet instead.</div>
+  <div class="grid g3" style="margin-bottom:16px">
+    ${RECOMMENDERS.map(r=>{ const rs=state.recs[r.id]; return `<div class="card">
+      <h3 style="margin-bottom:2px">${esc(r.name)}</h3>
+      <div class="small muted" style="margin-bottom:8px">${esc(r.title)}<br>${esc(r.from)}</div>
+      ${REC_STEPS.map(st=>`<label class="check ${rs.steps[st[0]]?"done":""}"><input type="checkbox" data-recstep="${r.id}:${st[0]}" ${rs.steps[st[0]]?"checked":""}><span><b>${st[1]}</b></span></label>`).join("")}
+      <label class="f">Date asked</label>
+      <input type="date" value="${esc(rs.askedOn)}" data-recfield="${r.id}:askedOn">
+      <div class="small muted" style="margin-top:10px"><b>${recLettersDone(r.id)} / 5</b> letters submitted</div>
+      <div class="bar" style="margin-top:4px"><span style="width:${recLettersDone(r.id)/5*100}%"></span></div>
+      <label class="f">Notes</label>
+      <textarea data-recfield="${r.id}:notes" style="min-height:70px" placeholder="Reply, meeting, reminders sent...">${esc(rs.notes)}</textarea>
+    </div>`;}).join("")}
+  </div>
+  <div class="card">
+    <h3>Letter status by school</h3>
+    <div style="overflow-x:auto">
+    <table>
+      <tr><th>Recommender</th>${SCHOOLS.map(s=>`<th>${esc(s.short)}</th>`).join("")}</tr>
+      ${RECOMMENDERS.map(r=>`<tr><td><b>${esc(r.name)}</b></td>${SCHOOLS.map(s=>`<td style="min-width:140px">${recSelect(r.id,s.id)}</td>`).join("")}</tr>`).join("")}
+    </table></div>
+    <p class="small muted" style="margin:10px 0 0">Ask 3–4 weeks before each deadline. Send gentle reminders about a week before.</p>
+  </div>`;
+}
+
+function pageBackup(){
+  return `
+  <h2>Backup &amp; Restore</h2>
+  <p class="sub">Your checkboxes and notes are saved in this browser only. Download a backup to keep them safe or to move them to another computer or phone.</p>
+  <div class="card">
+    <h3>Back up</h3>
+    <p class="small muted" style="margin:0 0 8px">Copy this text and save it somewhere safe, like a note or an email to yourself.</p>
+    <textarea id="backupText" readonly style="min-height:120px;font-family:monospace;font-size:12px">${esc(JSON.stringify(state))}</textarea>
+    <div class="row" style="margin-top:8px"><button class="btn primary" id="copyBtn">Copy backup</button></div>
+    <h3 style="margin-top:22px">Restore</h3>
+    <p class="small muted" style="margin:0 0 8px">Paste a backup here, or choose a saved .json/.txt file. Restoring replaces what's saved in this browser.</p>
+    <textarea id="restoreText" style="min-height:90px;font-family:monospace;font-size:12px" placeholder="Paste backup text here"></textarea>
+    <div class="row" style="margin-top:8px">
+      <button class="btn primary" id="restoreBtn">Restore pasted backup</button>
+      <label class="btn" style="display:inline-block">Choose file…<input type="file" id="importFile" accept=".json,.txt,application/json,text/plain" style="display:none"></label>
+    </div>
+  </div>`;
+}
+
+/* ---------- Router ---------- */
+function render(){
+  const h=location.hash.slice(1)||"home";
+  const s=SCHOOLS.find(x=>x.id===h);
+  let html;
+  if(s) html=pageSchool(s);
+  else if(h==="sop") html=pageSOP();
+  else if(h==="recs") html=pageRecs();
+  else if(h==="backup") html=pageBackup();
+  else html=pageHome();
+  $("#main").innerHTML=html;
+  renderNav();
+  window.scrollTo(0,0);
+}
+window.addEventListener("hashchange",render);
+
+/* ---------- Events ---------- */
+document.addEventListener("change",e=>{
+  const t=e.target, d=t.dataset;
+  if(d.check){ const [sid,k]=d.check.split(":"); state.schools[sid].checks[k]=t.checked;
+    const cur=state.schools[sid].status;
+    if(t.checked && k==="submit" && (cur==="notstarted"||cur==="inprogress")) state.schools[sid].status="submitted";
+    else if(t.checked && cur==="notstarted") state.schools[sid].status="inprogress";
+    save(); render(); return; }
+  if(d.status){ state.schools[d.status].status=t.value; save(); return; }
+  if(d.sopstatus){ state.schools[d.sopstatus].sopStatus=t.value; save(); return; }
+  if(d.resume!==undefined){ state.resume.status=t.value; save(); return; }
+  if(d.recstep){ const [rid,k]=d.recstep.split(":"); state.recs[rid].steps[k]=t.checked; save(); render(); return; }
+  if(d.recschool){ const [rid,sid]=d.recschool.split(":"); state.recs[rid].perSchool[sid]=t.value; save(); return; }
+  if(d.field && t.type==="date"){ const [sid,k]=d.field.split(":"); state.schools[sid][k]=t.value; save(); return; }
+  if(d.recfield && t.type==="date"){ const [rid,k]=d.recfield.split(":"); state.recs[rid][k]=t.value; save(); return; }
+  if(d.sop && t.tagName==="SELECT"){ state.sop[d.sop]=t.value; save(); return; }
+  if(t.id==="importFile" && t.files[0]){
+    const r=new FileReader();
+    r.onload=()=>{ try{ state=deepMerge(blank(), JSON.parse(r.result)); save(); render(); $("#toast").textContent="Restored"; }catch(err){ $("#toast").textContent="That file isn't a valid backup"; save(); } setTimeout(()=>$("#toast").textContent="Saved",1500); };
+    r.readAsText(t.files[0]);
+  }
+});
+let typeTimer;
+document.addEventListener("input",e=>{
+  const t=e.target, d=t.dataset;
+  if(t.tagName!=="TEXTAREA" && !(t.type==="url")) return;
+  if(d.field){ const [sid,k]=d.field.split(":"); state.schools[sid][k]=t.value; }
+  else if(d.recfield){ const [rid,k]=d.recfield.split(":"); state.recs[rid][k]=t.value; }
+  else if(d.sop){ state.sop[d.sop]=t.value; }
+  else return;
+  clearTimeout(typeTimer); typeTimer=setTimeout(save,500);
+});
+document.addEventListener("click",e=>{
+  if(e.target.id==="copyBtn"){
+    const ta=$("#backupText"); const txt=ta.value;
+    const done=()=>{ $("#toast").textContent="Copied"; $("#toast").classList.add("show"); setTimeout(()=>{$("#toast").classList.remove("show"); $("#toast").textContent="Saved";},1200); };
+    try{ navigator.clipboard.writeText(txt).then(done).catch(()=>{ ta.select(); try{document.execCommand("copy");}catch(_){} done(); }); }
+    catch(err){ ta.select(); try{document.execCommand("copy");}catch(_){} done(); }
+  }
+  if(e.target.id==="restoreBtn"){
+    try{ state=deepMerge(blank(), JSON.parse($("#restoreText").value)); save(); render(); }
+    catch(err){ $("#toast").textContent="That isn't a valid backup"; $("#toast").classList.add("show"); setTimeout(()=>{$("#toast").classList.remove("show"); $("#toast").textContent="Saved";},1500); }
+  }
+});
+
+render();
+</script>
+</body>
+</html>
